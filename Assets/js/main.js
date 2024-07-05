@@ -91,6 +91,6 @@ window.addEventListener('scroll', function() {
     scrollTimeout = setTimeout(function() {
         nav.classList.add("nav--hidden");
         console.log('User stopped scrolling');
-    }, 200);
+    }, 1000);
 });
 }
