@@ -799,4 +799,8 @@ swiper-container {
         font-size: 0.9em;
     }
 }
+.parallax{
+    padding:50%;
+    width: 80%;
+    margin:auto;
   
