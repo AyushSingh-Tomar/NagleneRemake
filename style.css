@@ -35,7 +35,10 @@ header {
     height: 100vh;
     background-color: #153628;
 }
-
+.lite{
+    width: fit-content;
+    height: fit-content;
+}
 #nalgene {
     position: absolute;
     top: 80%;
