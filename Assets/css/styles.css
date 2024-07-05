@@ -41,11 +41,7 @@
 .invisible-scrollbar,
 .mostly-customized-scrollbar {
   display: block;
-  width: 10em;
-  overflow: auto;
-  height: 2em;
-  padding: 1em;
-  margin: 1em auto;
+ 
   outline: 2px dashed cornflowerblue;
 }
 
