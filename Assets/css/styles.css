@@ -37,24 +37,33 @@
   padding: 0;
   margin: 0;
 }
-html::-webkit-scrollbar {
-    width: 2px;
+.visible-scrollbar,
+.invisible-scrollbar,
+.mostly-customized-scrollbar {
+  display: block;
+  width: 10em;
+  overflow: auto;
+  height: 2em;
+  padding: 1em;
+  margin: 1em auto;
+  outline: 2px dashed cornflowerblue;
 }
-        
-html::-webkit-scrollbar-track {
-    border-radius: 8px;
-    background-image: url("https://i.ibb.co/5150925/tracks.png");
-    background-position: -5px;
-    background-repeat: repeat-y;
-    background-size: 50px;
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-        
-html::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-  background-image: url("https://i.ibb.co/q95CBdZ/train.png");
-    background-position:center center;
-    background-repeat: no-repeat;
-    background-size: 35px;
+
+/* Demonstrate a "mostly customized" scrollbar
+ * (won't be visible otherwise if width/height is specified) */
+.mostly-customized-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #aaa; /* or add it to the track */
+}
+
+/* Add a thumb */
+.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
+  background: #000;
 }
 body {
   --nav-height: 3.5rem;
