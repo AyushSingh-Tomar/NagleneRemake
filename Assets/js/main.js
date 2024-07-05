@@ -89,8 +89,13 @@ addEventListener('resize', removeStyle)
 window.addEventListener('scroll', function() {
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(function() {
-        nav.classList.add("nav--hidden");
+        setTimeout(doSomething, 3000);
+        
         console.log('User stopped scrolling');
-    }, 10000);
+    }, 200);
 });
+}
+
+function doSomething() {
+   nav.classList.add("nav--hidden");
 }
