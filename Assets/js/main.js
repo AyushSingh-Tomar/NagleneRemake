@@ -84,4 +84,13 @@ addEventListener('resize', removeStyle)
          }
  lastScrollY=window.scrollY;
     });
+   let scrollTimeout;
+
+window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+        nav.classList.add("nav--hidden");
+        console.log('User stopped scrolling');
+    }, 200);
+});
 }
