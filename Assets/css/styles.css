@@ -38,7 +38,7 @@
   margin: 0;
 }
 html::-webkit-scrollbar {
-    width: 20px;
+    width: 2px;
 }
         
 html::-webkit-scrollbar-track {
