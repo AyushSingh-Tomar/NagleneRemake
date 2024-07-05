@@ -37,30 +37,7 @@
   padding: 0;
   margin: 0;
 }
-.visible-scrollbar,
-.invisible-scrollbar,
-.mostly-customized-scrollbar {
-  display: block;
- 
-  outline: 2px dashed cornflowerblue;
-}
 
-.invisible-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Demonstrate a "mostly customized" scrollbar
- * (won't be visible otherwise if width/height is specified) */
-.mostly-customized-scrollbar::-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-  background-color: #aaa; /* or add it to the track */
-}
-
-/* Add a thumb */
-.mostly-customized-scrollbar::-webkit-scrollbar-thumb {
-  background: #000;
-}
 body {
   --nav-height: 3.5rem;
   /* padding-top: var(--nav-height); */
