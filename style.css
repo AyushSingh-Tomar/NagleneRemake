@@ -39,6 +39,7 @@ header {
     width: fit-content;
     height: fit-content;
 }
+
 #nalgene {
     position: absolute;
     top: 80%;
@@ -802,5 +803,4 @@ swiper-container {
         font-size: 0.9em;
     }
 }
-
   
