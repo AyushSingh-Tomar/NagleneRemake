@@ -71,31 +71,192 @@ const removeStyle = () =>{
 
 addEventListener('resize', removeStyle)
 // Hiding navbar from here
-{
-    const nav=document.querySelector(".header");
-    nav.classList.add("nav--hidden");
-    let lastScrollY=window.scrollY;
-    window.addEventListener("scroll",()=>{
-         if(lastScrollY<window.scrollY && window.scrollY){
-          nav.classList.add("nav--hidden");
-         }
-         else{
+//---------------------------------------------------------------------hide nav
+const nav = document.querySelector(".header");
+nav.classList.add("nav--hidden");
+let lastScrollY = window.scrollY;
+let isHovering = false;
+let scrollTimeout;
+
+function handleScroll() {
+    const currentScrollY = window.scrollY;
+
+    
+    if (!isHovering) {
+        if (lastScrollY < currentScrollY && currentScrollY) {
+            nav.classList.add("nav--hidden");
+        } else {
             nav.classList.remove("nav--hidden");
-         }
- lastScrollY=window.scrollY;
-    });
-   let scrollTimeout;
+        }
+    }
 
-window.addEventListener('scroll', function() {
     clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function() {
-        setTimeout(doSomething, 3000);
-        
-        console.log('User stopped scrolling');
-    }, 200);
-});
+    scrollTimeout = setTimeout(() => {
+        if (!isHovering) {
+            nav.classList.add("nav--hidden");
+        }
+    }, 1500);                                                              //change it for increasing delay before navbar goes off
+
+    lastScrollY = currentScrollY;
 }
 
-function doSomething() {
-   nav.classList.add("nav--hidden");
+
+window.addEventListener("scroll", handleScroll);
+
+
+nav.addEventListener("mouseenter", () => {
+    isHovering = true;
+    nav.classList.remove("nav--hidden");
+});
+
+nav.addEventListener("mouseleave", () => {
+    isHovering = false;
+    handleScroll(); 
+});
+
+
+//// smoooth scrolling
+class App {
+    constructor() {
+
+        this.heroImages = [...document.querySelectorAll('.hero__images img')];
+        this.texts = [...document.querySelectorAll('.text__effect')];
+        this._initialize();
+        this._render();
+    }
+
+    _initialize() {
+        this._setInitialStates();
+        this._createLenis();
+        this._createIntro();
+        this._createHero();
+        this._createTextAnimation();
+        this._createPinnedSection();
+    }
+
+
+    // .text__effect p,
+    _setInitialStates() {
+        gsap.set('.hero__title span, .fullwidth-image__text', {
+
+            y: 400,                                                 //changeable
+            opacity: 0
+        })
+        gsap.set('.hero__images img', {
+            opacity: 0,
+            y: gsap.utils.random(2000, 1900)                     //changeable
+
+        })
+        gsap.set('.fullwidth-image img', {
+
+            scale: 1.3
+        })
+
+
+    }
+
+    _createLenis() {
+        this.lenis = new Lenis({
+            lerp: 0.1
+        })
+    }
+
+    _createIntro() {
+        const tl = gsap.timeline();
+
+        tl.to('.hero__title div', {
+            opacity: 1
+        }).to('.hero__title span', {
+            y: 400,                                           //changeable
+            opacity: 1,
+            ease: 'expo.out',
+            duration: 2,
+            stagger: 0.01
+        }).to('.hero__images img',
+            {
+                opacity: 1,
+                y: gsap.utils.random(1200, 1100),
+                ease: 'power3.out',
+                duration: 2,
+                stagger: 0.04
+            }, '-=1')                                          //changeable(0.5) maybe not
+    }
+
+    _createHero() {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,                           //changeable
+            }
+        });
+
+        this.heroImages.forEach(image => {
+            tl.to(image, {
+                ease: 'none',
+                yPercent: gsap.utils.random(-100, -50)
+            }, 0)
+        })
+
+    }
+
+    _createTextAnimation() {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.text-block',
+                start: 'top center',
+                end: 'bottom top+=25%',
+                scrub: true,                           //changeable
+            }
+        });
+
+        this.texts.forEach((text, index) => {
+            const overlay = text.querySelector('.text__overlay');
+
+            tl.to(overlay, {
+                scaleX: 0
+            })
+            // .to(content,{
+            //     y:0,
+            //     opacity: 1,
+            //     ease: 'expo.out',
+            //     duration: 2,
+            //     delay:() => index*0.1
+            // },0)
+        })
+    }
+    _createPinnedSection() {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.fullwidth-image',
+                start: 'top top',
+                end: '+=1500',
+                scrub: true,
+                pin: true                     //changeable
+            }
+        });
+
+        tl.to('.fullwidth-image__overlay', {
+
+            opacity: 0.7
+        }).to('.fullwidth-image', {
+
+
+            "clip-path": "polygon(0% 0% ,100% 0%,100% 100%, 0% 100%)"
+        }, 0).to('.fullwidth-image img', {
+            scale: 1
+        }, 0).to('.fullwidth-image__text',
+            {
+                y: 0,
+                opacity: 1
+            }, 0)
+    }
+    _render(time) {
+        this.lenis.raf(time);
+        requestAnimationFrame(this._render.bind(this))
+    }
+
 }
+
+new App();
